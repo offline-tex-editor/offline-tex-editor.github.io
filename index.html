@@ -22,6 +22,7 @@
 <li><a href="#main-document-and-engine">Main document and engine</a></li>
 <li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li>
 <li><a href="#security">Security</a></li>
+<li><a href="#contributing">Contributing</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#contact">Contact</a></li>
 <li><a href="#suggest">Suggestion box</a></li>
@@ -37,20 +38,30 @@
         <code id="pip">pip install offline-tex-editor</code>
         <button type="button" class="copy" data-copy="pip">Copy</button>
       </div>
-      <p class="install-note">Published on PyPI: <a href="https://pypi.org/project/offline-tex-editor/">pypi.org/project/offline-tex-editor</a></p>
+      <p class="install-note">Published on PyPI: <a href="https://pypi.org/project/offline-tex-editor/">pypi.org/project/offline-tex-editor</a>.
+        Source code on GitHub: <a href="https://github.com/offline-tex-editor/offline-tex-editor">github.com/offline-tex-editor/offline-tex-editor</a>
+        (<a href="#from-the-source-code">run it from a clone</a>).</p>
     </header>
 
 <figure class="shot"><img src="assets/editor.jpg" alt="The editor with LaTeX source on the left and the compiled PDF on the right" width="1558" height="784"><figcaption>Figure 1: The editor with LaTeX source on the left and the compiled PDF on the right</figcaption></figure>
 
 <h2 id="install">Install</h2>
-<p>You need Python 3.9 or newer and a TeX distribution (see <a href="#requirements">Requirements</a>). Then:</p>
+<p>You need Python 3.9 or newer and a TeX distribution (see <a href="#requirements">Requirements</a>). Install the editor with pip, or run it straight from its source code.</p>
+<h3 id="with-pip">With pip</h3>
 <pre><code class="language-bash">pip install offline-tex-editor</code></pre>
 <p>Or install it with <a href="https://pipx.pypa.io">pipx</a>, which keeps it apart from your other Python packages:</p>
 <pre><code class="language-bash">pipx install offline-tex-editor</code></pre>
 <p>To update later, run <code>pip install --upgrade offline-tex-editor</code> (or <code>pipx upgrade offline-tex-editor</code>).</p>
+<h3 id="from-the-source-code">From the source code</h3>
+<p>Clone the repository and start the editor from the clone. Nothing else needs to be installed:</p>
+<pre><code class="language-bash">git clone https://github.com/offline-tex-editor/offline-tex-editor.git
+cd offline-tex-editor
+./start.sh --root path/to/your/project --open</code></pre>
+<p>On Windows, run <code>.\start.cmd</code> instead of <code>./start.sh</code>. Both take the same <a href="#options">options</a> as the <code>offline-tex-editor</code> command. To update later, run <code>git pull</code> in the clone. To get the <code>offline-tex-editor</code> command from the clone instead, run <code>pip install .</code> in it.</p>
 <h2 id="run">Run</h2>
 <p>Start it on your LaTeX project's folder:</p>
 <pre><code class="language-bash">offline-tex-editor --root path/to/your/project --open</code></pre>
+<p>(From a clone of the source code, run <code>./start.sh</code>, or <code>.\start.cmd</code> on Windows, with the same options.)</p>
 <p><code>--open</code> opens the editor in your browser. Without it, open the address it prints, usually http://127.0.0.1:8765/. Stop the editor with Ctrl+C in the terminal.</p>
 <p>Started without <code>--root</code>, it uses the current folder. If the shell says the <code>offline-tex-editor</code> command is not found, pip put it in a folder that is not on your PATH (pip prints a warning naming that folder). Run <code>python -m offline_tex_editor</code> instead, or install with pipx.</p>
 <h2 id="requirements">Requirements</h2>
@@ -81,25 +92,28 @@
 <p>The editor is meant for one person on their own machine. It has no login, so:</p>
 <ul><li><strong>Keep the default <code>--host 127.0.0.1</code>.</strong> The Git panel can push with your credentials, and anyone who can reach the port can use it. Binding to another address prints a warning; put something with authentication in front of it if you need remote access.</li><li>File operations stay inside the project folder, never touch <code>.git/</code> or <code>build/</code>, and only open or create editable source types (<code>.tex .bib .sty .cls .bst .md .txt .csv .py .sh</code> and a few more). Uploads are limited to those and to images and PDFs. Deleted files are moved to <code>build/.editor-trash/</code>, not erased.</li><li>It refuses requests that a web page from another site could make while the editor is open: requests whose <code>Host</code> header is not this machine (DNS rebinding), and POSTs that are cross-origin or are not JSON (cross-site request forgery). The page cannot be framed by other sites, and its Content-Security-Policy allows no inline or evaluated scripts. Images are served with a sandboxing policy, so an SVG cannot run scripts.</li><li>Git commands never prompt: a push that needs credentials you have not set up fails with git's message instead of hanging.</li><li>Compiling runs <code>latexmk</code>, which reads the project's <code>.latexmkrc</code> (Perl code); <code>--shell-escape</code> lets the document run programs. Only compile projects you trust, as with any LaTeX toolchain.</li></ul>
 <p>To report a security problem privately, see <a href="#contact">Contact</a>.</p>
+<h2 id="contributing">Contributing</h2>
+<p>The source code is on <a href="https://github.com/offline-tex-editor/offline-tex-editor">GitHub</a>. Bug fixes and improvements are welcome as pull requests; for a larger change, please open an issue first so that we can agree on the approach. <a href="https://github.com/offline-tex-editor/offline-tex-editor/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> explains how to run the editor from a clone, run the tests, and the few rules the code follows.</p>
 <h2 id="license">License</h2>
-<p>MIT License; the full text comes with the package. Offline TeX Editor includes CodeMirror 5 (MIT) and pdf.js (Apache-2.0), which keep their own licenses.</p>
+<p>MIT License; see <a href="https://github.com/offline-tex-editor/offline-tex-editor/blob/main/LICENSE">LICENSE</a> (the full text also comes with the package). Offline TeX Editor includes CodeMirror 5 (MIT) and pdf.js (Apache-2.0), which keep their own licenses.</p>
 <p>TeX is a trademark of the American Mathematical Society.</p>
 
     <section id="contact">
       <h2>Contact</h2>
       <p>For ideas, bug reports and questions, use the <a href="#suggest">suggestion box</a> below, or look through the
-        <a href="https://github.com/offline-tex-editor/offline-tex-editor.github.io/issues">issue tracker</a> to see whether someone has asked already.</p>
-      <p>To report a security problem, use <a href="https://github.com/offline-tex-editor/offline-tex-editor.github.io/security/advisories/new">private
+        <a href="https://github.com/offline-tex-editor/offline-tex-editor/issues">issue tracker</a> to see whether someone has asked already.</p>
+      <p>To report a security problem, use <a href="https://github.com/offline-tex-editor/offline-tex-editor/security/advisories/new">private
         vulnerability reporting</a> instead, so it stays private until it is fixed.</p>
 
-      <p>Offline TeX Editor is made by <a href="https://github.com/KSMubasshir">KSMubasshir</a>.</p>
+      <p>Offline TeX Editor is made by <a href="https://github.com/KSMubasshir">KSMubasshir</a>. Its source code is
+        <a href="https://github.com/offline-tex-editor/offline-tex-editor">on GitHub</a>, and pull requests are welcome.</p>
     </section>
 
     <section id="suggest">
       <h2>Suggestion box</h2>
       <p>Ideas, bug reports and questions are all welcome. Sending opens a pre-filled issue on GitHub, where you can
         check it before you post it. You need a GitHub account.</p>
-      <form class="suggest" action="https://github.com/offline-tex-editor/offline-tex-editor.github.io/issues/new" method="get" target="_blank" rel="noopener">
+      <form class="suggest" action="https://github.com/offline-tex-editor/offline-tex-editor/issues/new" method="get" target="_blank" rel="noopener">
         <fieldset>
           <legend>What would you like to send?</legend>
           <label class="choice"><input type="radio" name="template" value="suggestion.yml" checked> An idea or a feature request</label>
@@ -121,8 +135,9 @@
     </section>
 
     <footer>
-      <p>Offline TeX Editor 0.2.3 (<a href="https://pypi.org/project/offline-tex-editor/">on PyPI</a>), released under the MIT
-        License. It includes CodeMirror (MIT) and pdf.js (Apache-2.0).</p>
+      <p>Offline TeX Editor 0.2.3 (<a href="https://pypi.org/project/offline-tex-editor/">on PyPI</a>,
+        <a href="https://github.com/offline-tex-editor/offline-tex-editor">source code on GitHub</a>), released under the MIT License. It includes
+        CodeMirror (MIT) and pdf.js (Apache-2.0).</p>
       <p>TeX is a trademark of the American Mathematical Society.</p>
       <p>This page uses no cookies and loads nothing from other sites.</p>
     </footer>

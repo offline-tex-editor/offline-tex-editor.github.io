@@ -1,17 +1,11 @@
-# Offline TeX Editor
+# Offline TeX Editor website
 
-A LaTeX editor that runs on your own machine and opens in your browser. This repository holds its website and
-its issue tracker; the editor itself is installed with pip:
+This repository holds the website of Offline TeX Editor, a LaTeX editor that runs on your own machine and opens
+in your browser: https://offline-tex-editor.github.io/
 
-```bash
-pip install offline-tex-editor
-```
+- Source code, issues and pull requests: https://github.com/offline-tex-editor/offline-tex-editor
+- Package: https://pypi.org/project/offline-tex-editor/ (`pip install offline-tex-editor`)
+- Security problems: [report them privately](https://github.com/offline-tex-editor/offline-tex-editor/security/advisories/new)
 
-- Website and instructions: https://offline-tex-editor.github.io/
-- Package: https://pypi.org/project/offline-tex-editor/
-- Ideas, bug reports and questions: [open an issue](https://github.com/offline-tex-editor/offline-tex-editor.github.io/issues/new/choose), or use the
-  suggestion box on the website
-- Security problems: [report them privately](https://github.com/offline-tex-editor/offline-tex-editor.github.io/security/advisories/new)
-
-The files in this repository are generated from the editor's documentation; changes made here directly are
-overwritten by the next update.
+The files here are generated from the editor's README by `site/build.py` in the source repository; changes made
+here directly are overwritten by the next update.

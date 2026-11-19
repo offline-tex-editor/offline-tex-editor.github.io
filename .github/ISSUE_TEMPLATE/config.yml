@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Ideas, bug reports and questions
+    url: https://github.com/offline-tex-editor/offline-tex-editor/issues/new/choose
+    about: Issues are kept with the source code, in offline-tex-editor/offline-tex-editor.
   - name: Report a security problem
-    url: https://github.com/offline-tex-editor/offline-tex-editor.github.io/security/advisories/new
+    url: https://github.com/offline-tex-editor/offline-tex-editor/security/advisories/new
     about: Report it privately, so it is not public before it is fixed.
-  - name: Installation and usage
-    url: https://offline-tex-editor.github.io/
-    about: The website explains how to install and run the editor.
