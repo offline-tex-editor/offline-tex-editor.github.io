@@ -12,7 +12,7 @@
 <a class="skip" href="#main">Skip to the content</a>
 <div class="desk">
   <nav class="toc" aria-label="On this page">
-    <p class="toc-name">Offline TeX Editor <span>0.2.1</span></p>
+    <p class="toc-name">Offline TeX Editor <span>0.2.2</span></p>
     <ul>
 <li><a href="#install">Install</a></li>
 <li><a href="#run">Run</a></li>
@@ -65,8 +65,8 @@
 <ul><li>Recompiles on save (can be switched off) or with Ctrl/Cmd+Enter; a Stop button and a time limit for runaway documents; a save made during a compile is compiled next</li><li>pdfLaTeX, XeLaTeX or LuaLaTeX: see <a href="#main-document-and-engine">Main document and engine</a></li><li>Errors and warnings with file and line (click to open), the TeX context, and a plain-language hint for common errors. BibTeX and biber messages are shown too, and an error inside the generated bibliography points at the <code>.bib</code> entry that caused it</li><li>For long documents: a fast draft mode that draws images as boxes, and "compile only" one <code>\include</code>d chapter</li><li>"Changes": a word-level diff of the sources between the last two compiles that changed something</li></ul>
 <h3 id="the-pdf">The PDF</h3>
 <ul><li>Preview that keeps its scroll position across recompiles; zoom and page navigation</li><li>Find in the PDF (Ctrl/Cmd+F when the editor is not focused): finds words split by ligatures, line breaks and hyphenation. PDF text can be selected and copied</li><li>SyncTeX: double-click the PDF to jump to the source, or press Ctrl/Cmd+J to find the cursor in the PDF</li></ul>
-<h3 id="git">Git</h3>
-<ul><li>Changed files with diffs, stage/unstage, commit, push (sets the upstream on the first push), fetch, history</li><li>Pull; when your branch and the remote have both moved, choose to rebase or merge. Conflicts are listed and highlighted in the editor; mark them resolved, then finish (or abort) the merge or rebase</li><li>Uses your own git and credential helper; the editor stores nothing</li></ul>
+<h3 id="git-and-github">Git and GitHub</h3>
+<ul><li><strong>Sync</strong> in one click: pull, then push. When your branch and GitHub both have new commits, choose to rebase or merge. Separate Pull, Push and Fetch buttons are there too, and the panel fetches in the background, so it shows when GitHub has commits you don't have yet</li><li>Start a git repository for a project, and connect it to a GitHub repository by pasting the repository's address (create an empty repository on GitHub first); the first Sync then sends your commits there</li><li>Changed files with diffs, stage/unstage, commit, history. Conflicts are listed and highlighted in the editor; mark them resolved, then finish (or abort) the merge or rebase</li><li>Uses your own git and its credentials; the editor stores nothing. To push to GitHub over https, sign in once with the GitHub CLI (<code>gh auth login</code>, then <code>gh auth setup-git</code>) or set up another credential helper</li></ul>
 <h2 id="options">Options</h2>
 <div class="table"><table><thead><tr><th>Option</th><th>Default</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--root DIR</code></td><td>current folder</td><td>LaTeX project folder</td></tr><tr><td><code>--main FILE</code></td><td>see below</td><td>main <code>.tex</code> file, relative to <code>--root</code></td></tr><tr><td><code>--engine NAME</code></td><td><code>auto</code></td><td><code>pdflatex</code>, <code>xelatex</code> or <code>lualatex</code>; see below</td></tr><tr><td><code>--jobname NAME</code></td><td>name of the main file</td><td>PDF name in <code>build/</code></td></tr><tr><td><code>--shell-escape</code></td><td>off</td><td>let the document run programs (minted before v3, svg, gnuplottex); only for projects you trust</td></tr><tr><td><code>--timeout N</code></td><td><code>600</code></td><td>stop a compile after N seconds</td></tr><tr><td><code>--port N</code></td><td>first free from 8765</td><td>port; several projects can be open at once</td></tr><tr><td><code>--host ADDR</code></td><td><code>127.0.0.1</code></td><td>bind address; the default is reachable only from your machine</td></tr><tr><td><code>--open</code></td><td>off</td><td>open the editor in your browser</td></tr><tr><td><code>--no-initial-compile</code></td><td>off</td><td>skip the compile at start-up</td></tr><tr><td><code>--version</code></td><td></td><td>print the version</td></tr></tbody></table></div>
 <p>The PDF and auxiliary files go to <code>build/</code> in the project folder.</p>
@@ -114,13 +114,13 @@
           <label for="s-system">Your system</label>
           <input id="s-system" name="system" placeholder="For example: Ubuntu 24.04, TeX Live 2024, Firefox 130">
         </div>
-        <input type="hidden" name="version" value="0.2.1">
+        <input type="hidden" name="version" value="0.2.2">
         <button type="submit" class="primary">Continue on GitHub</button>
       </form>
     </section>
 
     <footer>
-      <p>Offline TeX Editor 0.2.1 (<a href="https://pypi.org/project/offline-tex-editor/">on PyPI</a>), released under the MIT
+      <p>Offline TeX Editor 0.2.2 (<a href="https://pypi.org/project/offline-tex-editor/">on PyPI</a>), released under the MIT
         License. It includes CodeMirror (MIT) and pdf.js (Apache-2.0).</p>
       <p>This page uses no cookies and loads nothing from other sites.</p>
     </footer>
