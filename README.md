@@ -1,7 +1,7 @@
 # Offline TeX Editor
 
-A local, Overleaf-style LaTeX editor that runs on your own machine. This repository holds its website and its
-issue tracker; the editor itself is installed with pip:
+A LaTeX editor that runs on your own machine and opens in your browser. This repository holds its website and
+its issue tracker; the editor itself is installed with pip:
 
 ```bash
 pip install offline-tex-editor
