@@ -8,6 +8,7 @@ pip install offline-tex-editor
 ```
 
 - Website and instructions: https://offline-tex-editor.github.io/
+- Package: https://pypi.org/project/offline-tex-editor/
 - Ideas, bug reports and questions: [open an issue](https://github.com/offline-tex-editor/offline-tex-editor.github.io/issues/new/choose), or use the
   suggestion box on the website
 - Security problems: [report them privately](https://github.com/offline-tex-editor/offline-tex-editor.github.io/security/advisories/new)
