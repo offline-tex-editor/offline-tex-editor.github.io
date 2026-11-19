@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Offline TeX Editor</title>
+<meta name="description" content="A local, Overleaf-style LaTeX editor that runs on your own machine. Install it with pip install offline-tex-editor.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css?v=7496e81ffb">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<div class="desk">
+  <nav class="toc" aria-label="On this page">
+    <p class="toc-name">Offline TeX Editor <span>0.2.0</span></p>
+    <ul>
+<li><a href="#install">Install</a></li>
+<li><a href="#run">Run</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#options">Options</a></li>
+<li><a href="#main-document-and-engine">Main document and engine</a></li>
+<li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#contact">Contact</a></li>
+<li><a href="#suggest">Suggestion box</a></li>
+    </ul>
+  </nav>
+
+  <main id="main" class="paper">
+    <header class="masthead">
+      <h1>Offline TeX Editor</h1>
+<p>A local, Overleaf-style editor for LaTeX projects on your own machine: edit in the browser, recompile with <code>latexmk</code>, and preview the PDF side by side with SyncTeX in both directions.</p>
+<p>Fully offline: no accounts, no cloud, no internet connection needed. It runs a small server on your computer and opens in your browser.</p>
+      <div class="install">
+        <code id="pip">pip install offline-tex-editor</code>
+        <button type="button" class="copy" data-copy="pip">Copy</button>
+      </div>
+    </header>
+
+<figure class="shot"><img src="assets/editor.jpg" alt="The editor with LaTeX source on the left and the compiled PDF on the right" width="1558" height="784"><figcaption>Figure 1: The editor with LaTeX source on the left and the compiled PDF on the right</figcaption></figure>
+
+<h2 id="install">Install</h2>
+<p>You need Python 3.9 or newer and a TeX distribution (see <a href="#requirements">Requirements</a>). Then:</p>
+<pre><code class="language-bash">pip install offline-tex-editor</code></pre>
+<p>Or install it with <a href="https://pipx.pypa.io">pipx</a>, which keeps it apart from your other Python packages:</p>
+<pre><code class="language-bash">pipx install offline-tex-editor</code></pre>
+<p>To update later, run <code>pip install --upgrade offline-tex-editor</code> (or <code>pipx upgrade offline-tex-editor</code>).</p>
+<h2 id="run">Run</h2>
+<p>Start it on your LaTeX project's folder:</p>
+<pre><code class="language-bash">offline-tex-editor --root path/to/your/project --open</code></pre>
+<p><code>--open</code> opens the editor in your browser. Without it, open the address it prints, usually http://127.0.0.1:8765/. Stop the editor with Ctrl+C in the terminal.</p>
+<p>Started without <code>--root</code>, it uses the current folder. If the shell says the <code>offline-tex-editor</code> command is not found, pip put it in a folder that is not on your PATH (pip prints a warning naming that folder). Run <code>python -m offline_tex_editor</code> instead, or install with pipx.</p>
+<h2 id="requirements">Requirements</h2>
+<ul><li>Python 3.9 or newer</li><li>A TeX distribution with <code>latexmk</code> and <code>synctex</code>. TeX Live includes both (Debian/Ubuntu: <code>sudo apt install latexmk texlive-latex-recommended</code>; macOS: MacTeX). With MiKTeX on Windows, <code>latexmk</code> also needs Perl.</li><li>Optional: <code>git</code> for the Git panel, <code>biber</code> for biblatex, <code>texcount</code> for the word count</li><li>A browser from 2024 or later</li></ul>
+<p>Developed and tested on Linux. It is expected to work on macOS; on Windows it has not yet been tried with a real TeX installation, so reports are welcome.</p>
+<h2 id="features">Features</h2>
+<h3 id="writing">Writing</h3>
+<ul><li>LaTeX editor with tabs for open files, syntax highlighting, bracket matching, search in the file (Ctrl/Cmd+F), go to line, and comment toggling (Ctrl/Cmd+/)</li><li>Autocompletion for <code>\ref</code>/<code>\cref</code> labels, <code>\cite</code> keys (matching author and title too), environments (<code>\begin</code> adds the <code>\end</code>), file names in <code>\input</code> and <code>\includegraphics</code>, and commands, including your own <code>\newcommand</code>s</li><li>Spell check with your browser's dictionary, which skips LaTeX commands (turn it on in ⚙)</li><li>Files changed by other programs reload automatically; saving over a newer version on disk asks first. Encodings (UTF-8 or Latin-1) and line endings (LF or CRLF) are kept as they are</li></ul>
+<h3 id="the-project">The project</h3>
+<ul><li>File tree with images and PDFs; create, rename, move and delete files and folders (deleted files go to <code>build/.editor-trash/</code>, so mistakes can be undone); add files with a button or by dropping them on a folder; preview images and PDF figures</li><li>Search and replace in all files, with case, whole-word and regular-expression options</li><li>Document outline that follows <code>\input</code>, <code>\include</code>, <code>\subfile</code> and <code>\import</code>, and highlights the current section</li><li>Word count (with <code>texcount</code>, which comes with TeX Live)</li></ul>
+<h3 id="compiling">Compiling</h3>
+<ul><li>Recompiles on save (can be switched off) or with Ctrl/Cmd+Enter; a Stop button and a time limit for runaway documents; a save made during a compile is compiled next</li><li>pdfLaTeX, XeLaTeX or LuaLaTeX: see <a href="#main-document-and-engine">Main document and engine</a></li><li>Errors and warnings with file and line (click to open), the TeX context, and a plain-language hint for common errors. BibTeX and biber messages are shown too, and an error inside the generated bibliography points at the <code>.bib</code> entry that caused it</li><li>For long documents: a fast draft mode that draws images as boxes, and "compile only" one <code>\include</code>d chapter</li><li>"Changes": a word-level diff of the sources between the last two compiles that changed something</li></ul>
+<h3 id="the-pdf">The PDF</h3>
+<ul><li>Preview that keeps its scroll position across recompiles; zoom and page navigation</li><li>Find in the PDF (Ctrl/Cmd+F when the editor is not focused): finds words split by ligatures, line breaks and hyphenation. PDF text can be selected and copied</li><li>SyncTeX: double-click the PDF to jump to the source, or press Ctrl/Cmd+J to find the cursor in the PDF</li></ul>
+<h3 id="git">Git</h3>
+<ul><li>Changed files with diffs, stage/unstage, commit, push (sets the upstream on the first push), fetch, history</li><li>Pull; when your branch and the remote have both moved, choose to rebase or merge. Conflicts are listed and highlighted in the editor; mark them resolved, then finish (or abort) the merge or rebase</li><li>Uses your own git and credential helper; the editor stores nothing</li></ul>
+<h2 id="options">Options</h2>
+<div class="table"><table><thead><tr><th>Option</th><th>Default</th><th>Meaning</th></tr></thead><tbody><tr><td><code>--root DIR</code></td><td>current folder</td><td>LaTeX project folder</td></tr><tr><td><code>--main FILE</code></td><td>see below</td><td>main <code>.tex</code> file, relative to <code>--root</code></td></tr><tr><td><code>--engine NAME</code></td><td><code>auto</code></td><td><code>pdflatex</code>, <code>xelatex</code> or <code>lualatex</code>; see below</td></tr><tr><td><code>--jobname NAME</code></td><td>name of the main file</td><td>PDF name in <code>build/</code></td></tr><tr><td><code>--shell-escape</code></td><td>off</td><td>let the document run programs (minted before v3, svg, gnuplottex); only for projects you trust</td></tr><tr><td><code>--timeout N</code></td><td><code>600</code></td><td>stop a compile after N seconds</td></tr><tr><td><code>--port N</code></td><td>first free from 8765</td><td>port; several projects can be open at once</td></tr><tr><td><code>--host ADDR</code></td><td><code>127.0.0.1</code></td><td>bind address; the default is reachable only from your machine</td></tr><tr><td><code>--open</code></td><td>off</td><td>open the editor in your browser</td></tr><tr><td><code>--no-initial-compile</code></td><td>off</td><td>skip the compile at start-up</td></tr><tr><td><code>--version</code></td><td></td><td>print the version</td></tr></tbody></table></div>
+<p>The PDF and auxiliary files go to <code>build/</code> in the project folder.</p>
+<h2 id="main-document-and-engine">Main document and engine</h2>
+<p><strong>Main document.</strong> <code>--main</code> if given; otherwise <code>main.tex</code>; otherwise the <code>.tex</code> file with <code>\documentclass</code> that looks most like a main file. A <code>% !TEX root = ../thesis.tex</code> comment in the chosen file is followed. To work on another document of the same project (slides, a cover letter), pick it in ⚙.</p>
+<p><strong>Engine.</strong> In this order:</p>
+<ol><li><code>--engine</code> on the command line;</li><li>a <code>% !TEX program = xelatex</code> (or <code>lualatex</code>, <code>pdflatex</code>) comment at the top of the main file, as used by TeXShop, TeXstudio and VS Code;</li><li><code>$pdf_mode</code> in the project's <code>.latexmkrc</code> or <code>latexmkrc</code>;</li><li>otherwise pdfLaTeX.</li></ol>
+<p>⚙ shows which one is in effect and why.</p>
+<h2 id="keyboard-shortcuts">Keyboard shortcuts</h2>
+<div class="table"><table><thead><tr><th>Keys</th><th>Action</th></tr></thead><tbody><tr><td>Ctrl/Cmd+S</td><td>Save (and recompile, if auto-compile is on)</td></tr><tr><td>Ctrl/Cmd+Enter</td><td>Recompile</td></tr><tr><td>Ctrl/Cmd+J</td><td>Show the cursor position in the PDF</td></tr><tr><td>Double-click the PDF</td><td>Jump to the source</td></tr><tr><td>Ctrl+Space</td><td>Complete a command, label or citation key</td></tr><tr><td>Ctrl/Cmd+/</td><td>Comment or uncomment lines</td></tr><tr><td>Ctrl/Cmd+F</td><td>Find in the file (in the editor) or in the PDF (elsewhere)</td></tr><tr><td>Ctrl/Cmd+Shift+F</td><td>Search all files</td></tr></tbody></table></div>
+<h2 id="security">Security</h2>
+<p>The editor is meant for one person on their own machine. It has no login, so:</p>
+<ul><li><strong>Keep the default <code>--host 127.0.0.1</code>.</strong> The Git panel can push with your credentials, and anyone who can reach the port can use it. Binding to another address prints a warning; put something with authentication in front of it if you need remote access.</li><li>File operations stay inside the project folder, never touch <code>.git/</code> or <code>build/</code>, and only open or create editable source types (<code>.tex .bib .sty .cls .bst .md .txt .csv .py .sh</code> and a few more). Uploads are limited to those and to images and PDFs. Deleted files are moved to <code>build/.editor-trash/</code>, not erased.</li><li>It refuses requests that a web page from another site could make while the editor is open: requests whose <code>Host</code> header is not this machine (DNS rebinding), and POSTs that are cross-origin or are not JSON (cross-site request forgery). The page cannot be framed by other sites, and its Content-Security-Policy allows no inline or evaluated scripts. Images are served with a sandboxing policy, so an SVG cannot run scripts.</li><li>Git commands never prompt: a push that needs credentials you have not set up fails with git's message instead of hanging.</li><li>Compiling runs <code>latexmk</code>, which reads the project's <code>.latexmkrc</code> (Perl code); <code>--shell-escape</code> lets the document run programs. Only compile projects you trust, as with any LaTeX toolchain.</li></ul>
+<p>To report a security problem privately, see <a href="#contact">Contact</a>.</p>
+<h2 id="license">License</h2>
+<p>MIT License; the full text comes with the package. Offline TeX Editor includes CodeMirror 5 (MIT) and pdf.js (Apache-2.0), which keep their own licenses.</p>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>For ideas, bug reports and questions, use the <a href="#suggest">suggestion box</a> below, or look through the
+        <a href="https://github.com/offline-tex-editor/offline-tex-editor.github.io/issues">issue tracker</a> to see whether someone has asked already.</p>
+      <p>To report a security problem, use <a href="https://github.com/offline-tex-editor/offline-tex-editor.github.io/security/advisories/new">private
+        vulnerability reporting</a> instead, so it stays private until it is fixed.</p>
+
+      <p>Offline TeX Editor is made by <a href="https://github.com/KSMubasshir">KSMubasshir</a>.</p>
+    </section>
+
+    <section id="suggest">
+      <h2>Suggestion box</h2>
+      <p>Ideas, bug reports and questions are all welcome. Sending opens a pre-filled issue on GitHub, where you can
+        check it before you post it. You need a GitHub account.</p>
+      <form class="suggest" action="https://github.com/offline-tex-editor/offline-tex-editor.github.io/issues/new" method="get" target="_blank" rel="noopener">
+        <fieldset>
+          <legend>What would you like to send?</legend>
+          <label class="choice"><input type="radio" name="template" value="suggestion.yml" checked> An idea or a feature request</label>
+          <label class="choice"><input type="radio" name="template" value="bug_report.yml"> Something doesn't work</label>
+          <label class="choice"><input type="radio" name="template" value="question.yml"> A question</label>
+        </fieldset>
+        <label for="s-title">Title</label>
+        <input id="s-title" name="title" required maxlength="120" placeholder="A short summary">
+        <label for="s-details">Details</label>
+        <textarea id="s-details" name="details" rows="6" required
+                  placeholder="What you would like and why, or what happened and what you expected"></textarea>
+        <div class="bug-only">
+          <label for="s-system">Your system</label>
+          <input id="s-system" name="system" placeholder="For example: Ubuntu 24.04, TeX Live 2024, Firefox 130">
+        </div>
+        <input type="hidden" name="version" value="0.2.0">
+        <button type="submit" class="primary">Continue on GitHub</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>Offline TeX Editor 0.2.0, released under the MIT License. It includes CodeMirror (MIT) and pdf.js
+        (Apache-2.0).</p>
+      <p>This page uses no cookies and loads nothing from other sites.</p>
+    </footer>
+  </main>
+</div>
+<script src="assets/site.js?v=5bdb7c4951" defer></script>
+</body>
+</html>
